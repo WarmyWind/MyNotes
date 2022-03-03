@@ -3,4 +3,9 @@
 This is a test file.
 
 ## Test
-$${\mathop{\rm s}\nolimits} \left( {\frac{A}{B}} \right) = {c^2}$$
+
+Equation 1:
+
+$$
+{\mathop{\rm s}\nolimits} \left( {\frac{A}{B}} \right) = {c^2}
+$$
