@@ -29,7 +29,7 @@ OOD点在数学上很难定义，OOD检测的方法常常基于直觉设计。�
 > 定义：高斯过程（Gaussian Process，GP）是一个随机变量的集合。任意有限个GP都有一个联合高斯分布。一个GP可以通过均值和协方差定义。协方差可以用核函数$k：\mathbb R^d \times \mathbb R^d \rightarrow \mathbb R$来指定。例如：
 >
 > $$
-> p\left( {\bm f\left| X \right.} \right) = \mathcal N\left( {\bm 0,K\left( {X,X} \right)} \right)
+> p\left( {\bm f\left| X \right.} \right) = \mathcal N\left( {{\bf 0},K\left( {X,X} \right)} \right)
 > $$
 >
 > 其中$K\left( {X,X} \right)_{ij} = k\left(\bm x_i, \bm x_j \right)$，$\bm f_i = f\left(\bm x_i\right)$。当观察到训练数据，就将先验修正为最有可能生成这些训练数据的分布。
@@ -67,3 +67,19 @@ $$
 > 文章举了下面两幅图作为例子：左图是RBF核的GP回归，右图是一种极端情况的例子（潜在解空间的仅包含$g\left(x\right)$和 $h\left(x\right)$)。![img](image/On_out-of-distribution_detection_with_Bayesian_neural_networks/1646630855591.png)左图说明了GP回归中训练点附近的不确定度（以方差评估）很小，而在OOD区域中不确定度很高。右图说明了，当观察到训练数据后通过贝叶斯推断就会得到模型$g\left(x\right)$，而在该模型中不确定度在分布内外没有区别，这种情况说明了贝叶斯推断并不必然能得到可以很好地检测OOD的不确定度。并且检测OOD的能力与是否拟合训练集也无关。
 
 #### GP regression with an RBF kernel
+
+由GP回归的推导可知，对于输入${{{\bm{x}}^*}}$，预测值的方差为
+
+$$
+{\sigma ^2}\left( {{\bm f}^*} \right) = c\left( {{\bm x}^*,{\bm x}^*} \right) - \sum\limits_{i = 1}^n {{\beta _i}\left( {{\bm x}^*} \right)k\left( {{\bm x}^*,{\bm x}_i} \right)}
+$$
+
+其中
+
+$$
+{\beta _i}\left( {{\bm x}^*} \right) = \sum\limits_{j = 1}^n {{\bf{C}}\left( {\bm x,\bm x} \right)_{ij}^{ - 1}k\left( {{\bm x}^*,{{\bm x}_j}} \right)}
+$$
+
+可见，如果输入${{{\bm{x}}^*}}$与训练数据的距离很远，核函数也相应的变小，使得预测方差增大。这种性质保证了GP回归中的不确定度可以很好地检测OOD。
+
+#### The OOD behavior induced by NNGP kernels
