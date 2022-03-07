@@ -34,7 +34,7 @@ OOD点在数学上很难定义，OOD检测的方法常常基于直觉设计。�
 >
 > 其中$K\left( {X,X} \right)_{ij} = k\left(\bm x_i, \bm x_j \right)$，$\bm f_i = f\left(\bm x_i\right)$。当观察到训练数据，就将先验修正为最有可能生成这些训练数据的分布。
 >
-> 关于GP的详细内容可参考[高斯过程.md]((../Math/高斯过程.md))
+> 关于GP的详细内容可参考[高斯过程.md](../Math/高斯过程.md)
 
 GP常用的核函数是平方指数的RBF：
 
