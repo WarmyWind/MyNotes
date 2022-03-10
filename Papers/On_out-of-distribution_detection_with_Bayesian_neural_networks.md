@@ -68,7 +68,7 @@ $$
 
 #### GP regression with an RBF kernel
 
-由GP回归的推导可知，对于输入${{{\bm{x}}^*}}$，预测值的方差为
+由GP回归的推导（详见[../Math/高斯过程.md](../Math/高斯过程.md)）可知，对于输入${{{\bm{x}}^*}}$，预测值的方差为
 
 $$
 {\sigma ^2}\left( {{\bm f}^*} \right) = c\left( {{\bm x}^*,{\bm x}^*} \right) - \sum\limits_{i = 1}^n {{\beta _i}\left( {{\bm x}^*} \right)k\left( {{\bm x}^*,{\bm x}_i} \right)}
