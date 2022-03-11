@@ -46,7 +46,7 @@ $$
 
 在无限宽度的深度BNN（或被称作neural network Gaussian processes，NNGP）中，在选择合适先验的情况下，激活函数决定了BNN能够收敛到何种核函数的GP。文中举了一些不同激活函数导出的不同核函数的例子。
 
-### The architecture strongly influences OOD uncertainties
+## The architecture strongly influences OOD uncertainties
 
 本节讨论在传统核函数和NNGP导出的核函数下的OOD行为。
 
@@ -68,7 +68,7 @@ $$
 
 #### GP regression with an RBF kernel
 
-由GP回归的推导（详见[../Math/高斯过程.md](../Math/高斯过程.md)）可知，对于输入${{{\bm{x}}^*}}$，预测值的方差为
+由GP回归的推导（详见[高斯过程.md](../Math/高斯过程.md)）可知，对于输入${{{\bm{x}}^*}}$，预测值的方差为
 
 $$
 {\sigma ^2}\left( {{\bm f}^*} \right) = c\left( {{\bm x}^*,{\bm x}^*} \right) - \sum\limits_{i = 1}^n {{\beta _i}\left( {{\bm x}^*} \right)k\left( {{\bm x}^*,{\bm x}_i} \right)}
@@ -80,6 +80,39 @@ $$
 {\beta _i}\left( {{\bm x}^*} \right) = \sum\limits_{j = 1}^n {{\bf{C}}\left( {\bm x,\bm x} \right)_{ij}^{ - 1}k\left( {{\bm x}^*,{{\bm x}_j}} \right)}
 $$
 
-可见，如果输入${{{\bm{x}}^*}}$与训练数据的距离很远，核函数也相应的变小，使得预测方差增大。这种性质保证了GP回归中的不确定度可以很好地检测OOD。
+其中$c\left( {{x^*},{x^*}} \right) = k\left( {{x^*},{x^*}} \right) + \sigma _\varepsilon ^2$，在核方法为RBF时，该项为常数。如果输入${{{\bm{x}}^*}}$与训练数据的距离很远，第二项中$k\left(\bm x^*,\bm x_i\right)$也相应的变小，使得预测方差增大。这种性质保证了GP回归中的不确定度可以很好地检测OOD。
+
+![RBF kernel](image/On_out-of-distribution_detection_with_Bayesian_neural_networks/1646965793426.png)
+
+<center><font face='黑体'>图 RBF kernel</center></font>
 
 #### The OOD behavior induced by NNGP kernels
+
+以ReLU为例：
+
+![img](image/On_out-of-distribution_detection_with_Bayesian_neural_networks/1646967664267.png)
+
+<center><font face='黑体'>图 ReLU 无限宽度</center></font>
+
+从图中可以看出，这种情况下的OOD检测要比RBF核差。原因有两个：
+
+1. 先验认知不确定度$k\left(\bm x^*,\bm x^*\right)$不是常数。
+2. 从经验上并没有发现$k\left(\bm x, \bm x'\right)$与一种距离度量有关。
+
+因此文章认为，如果要从NNGP内核的角度来证明基于不确定性的OOD检测，还需要更多的理论工作。
+
+文章后面用splitMNIST进行仿真，说明了对于无限宽单隐藏层ReLU的BNN，OOD数据并不一定导致高不确定度，非OOD也不一定就输出低不确定度。
+
+## Infinite-width uncertainty is consistent with the finite-width uncertainty
+
+文中用哈密顿蒙特卡洛（Hamiltonian Monte Carlo，HMC）的方法训练BNN。仿真结果显示，中等宽度的BNN所建模的不确定度与相应的NNGP相一致。
+
+## The choice of weight space prior matters for OOD detection
+
+对于一个神经网络来说，函数空间的先验是由网络结构和权重空间的先验决定的。因此，除了网络结构会对预测不确定产生影响，权重先验也会产生很大地影响。
+
+## A trade-off between generalization and OOD detection
+
+当使用BNN时，泛化性能是否和OOD检测性能之间有折中关系？文章认为有。
+
+> 我的理解：如果我们拥有更多正确的先验（关于问题和数据），并正确地在网络中使用（通过网络结构或是权重先验），这将使得模型的泛化性能提高。于此同时，模型的认知不确定将降低。
