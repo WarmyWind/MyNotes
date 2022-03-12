@@ -57,3 +57,24 @@ $$
 ## Data Augmentation and Evaluation of Synthetic Data Quality
 
 暂略。
+
+## AI-based Handover Failure Prediction Model
+
+### HOF Prediction Models
+
+文章考虑一下六种分类器：
+
+1. 支持向量分类器
+2. 朴素贝叶斯分类器
+3. k-近邻算法
+4. 随机森林算法
+5. 极端梯度增强（extreme gradient boosting，XGBoost）
+6. 自适应增强（adaptive boosting，AdaBoost）
+
+文章认为在二分类问题上，与深度神经网络相比，这几种方法的效率和在小数据集上的表现好。
+
+### Domain Knowledge Based Feature Engineering
+
+结合领域知识来选择输入特征可以提高AI模型的性能表现。文章首先进行了Sobol-based方差敏感度分析。
+
+然后根据敏感度分析给出的特征组合为特征集，绘制输入为不同特征集的ROC和PRC曲线（文中似乎没提到用什么分类器），根据曲线下面积来判断特征集是否更有利于正确的预测。
