@@ -8,7 +8,7 @@
 
 ### TORIS Framework
 
-暂略。
+略。
 
 ### Inter-frequency Handover Success Rate
 
@@ -56,7 +56,7 @@ $$
 
 ## Data Augmentation and Evaluation of Synthetic Data Quality
 
-暂略。
+略。
 
 ## AI-based Handover Failure Prediction Model
 
@@ -78,3 +78,13 @@ $$
 结合领域知识来选择输入特征可以提高AI模型的性能表现。文章首先进行了Sobol-based方差敏感度分析。
 
 然后根据敏感度分析给出的特征组合为特征集，绘制输入为不同特征集的ROC和PRC曲线（文中似乎没提到用什么分类器），根据曲线下面积来判断特征集是否更有利于正确的预测。
+
+### Handover Failure Mitigation Algorithm and Performance Evaluation
+
+#### Tx Power Tuning vased HOSR Improvement Algorithm
+
+文章提出降低HOSR的算法很直接：当预测器预测会HOF时，就提高UE和BS的发射功率，直到预测器预测切换成功。
+
+#### Handover Failure Mitigation Scheme Evaluation
+
+文章结合漏判和错判，对二者分别归一化后加权相加，给出了一种评估方法。但文章仅用该评估指标做比较，并未利用该指标进行优化。
