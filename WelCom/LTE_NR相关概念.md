@@ -13,3 +13,29 @@
 6. RE：Resource Element，频域1个子载波，时域1个符号。
 7. RB：Resource Block，5G NR仅规定一个RB包含12个子载波（根据numerology不同，RB的带宽也不同），对RB的时间长度并没有定义。4G LTE不仅规定了一个RB包含12个子载波（12x15=180kHz），还规定了时间长度为7个普通循环前缀OFDM符号或6个拓展循环前缀OFDM符号。
 8. MCS：Modulation and Coding Scheme，5G NR中通常使用序号0~31表示32种不同方式。MCS决定了一个符号能够传输的比特数和传输码率，其中传输码率（code rate）是指有用比特数与总比特数的比值。通常MCS的选择与信道质量（一般用SINR评估）紧密联系，但具体的MCS选择要通过一系列复杂的算法完成。
+9. 载波聚合：Carrier Aggregation，CA。参与CA的每一个载波都可以叫做分量载波（component carrier，CC）。参与聚合的载波不限于同一基站，也可以来自相邻基站。CA可以分为三类：
+   - 频段内连续的CA
+   - 频段内不连续的CA
+   - 频段间的CA
+10. Pcell、Scell：，主小区（primary cell，Pcell）和辅小区（secondary cell，Scell）。Pcell承载信令，管理其他小区。Scell用于扩展带宽，由Pcell决定何时增加和删除。
+11. 双连接：dual connectivity，DC。指5G在非独立组网（NSA）下，设备可以同时连接到4G基站和5G基站的技术。
+12. MCG、SCG：master cell group（主小区组），secondary cell group（辅小区组）。在双连接下才会有MCG和SCG的概念，将4G和5G基站分为主辅。
+13. PScell：primary secondary cell,即SCG中的Pcell。
+14. Spcell：Pcell+PScell，即指代MCG和SCG中的Pcell。
+    ![img](image/LTE_NR相关概念/1647249173227.png)
+15. AMF：Access & Mobility Management Function，接入和移动管理功能。AMF是5G核心网中的控制面功能，它的主要功能和职责为：
+
+- 注册管理：UE必须完成注册流程来获得使用5G服务的许可。AMF允许UE注册和取消注册。
+- 连接管理：建立和发布UE和AMF之间的控制面信令连接。
+- 可达性（reachability）管理：保证UE是可达的，即当需要建立移动终端连接时，能够呼叫到UE。
+- 移动性管理：持续获取对UE在网络内的位置信息。
+
+16. UPF：User Plane Function，用户面功能。其主要功能为：
+
+* 无线接入网络与数据网络（DN，Data Network）之间的互联点，用于用户面的GTP隧道协议（GTP-U，GPRS Tunneling Protocol for User Plane）的封装和解封装；
+* 协议数据单元会话锚点（PSA，PDU Session Anchor），用于在无线接入时的提供移动性；
+* 5G SA数据包的路由和本地分流，作为中继UPF（I-UPF，Intermediate UPF）充当上行分类器（UL-CL，Uplink Classifier）或者分支节点UPF（Branching Point UPF）。
+
+  除上述功能外，UPF还有应用程序监测、数据流QoS处理、流量使用情况报告、IP管理、移动性适配、策略控制和计费等功能，可参考3GPP TS 23.501规范。
+
+17. SMF：Session Management Function，会话管理功能。SMF主要负责与分离的数据面交互，创建、更新和删除PDU会话，并管理与UPF的会话环境（session context）。
