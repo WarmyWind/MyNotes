@@ -17,10 +17,12 @@ $$
 为了简化模型和便于设计和分析，我们设模型可以分为线性部分和非线性部分：
 
 $$
-y\left( {\bf{x}} \right) = {{\bf{w}}^T}\bm\phi \left( {\bf{x}} \right)
+y\left( {\mathbf{x}} \right) = {{\mathbf{w}}^T}\bm\phi \left( {\mathbf{x}} \right)
 $$
 
-其中$\bf x$是输入向量，$\bf w$是$M$维权重向量，并设$\bf w$的先验分布为$p\left( {\bf{w}} \right) = \mathcal N\left( {{\bf{w}}\left| {{\bf{0}},{\alpha ^{ - 1}}{\bf{I}}} \right.} \right)$，$\bm \phi \left( {\bf{x}} \right){\rm{ = }}\left( {{\phi _0}\left( {\bf{x}} \right), \cdots ,{\phi _{M - 1}}\left( {\bf{x}} \right)} \right)^T$。这实际上就是所谓的**广义线性模型**。
+其中
+
+$\bf x$是输入向量，$\bf w$是$M$维权重向量，并设$\bf w$的先验分布为$p\left( {\bf{w}} \right) = \mathcal N\left( {{\bf{w}}\left| {{\bf{0}},{\alpha ^{ - 1}}{\bf{I}}} \right.} \right)$，$\bm \phi \left( {\bf{x}} \right){\rm{ = }}\left( {{\phi _0}\left( {\bf{x}} \right), \cdots ,{\phi _{M - 1}}\left( {\bf{x}} \right)} \right)^T$。这实际上就是所谓的**广义线性模型**。
 
 > 为了分析方便，以下均假设权重服从高斯分布。但是需要注意，BNN本身并不规定权重一定是高斯先验。已有很多文献说明了选择不同的先验对BNN性能影响很大。
 
@@ -33,23 +35,23 @@ $$
 观察到训练点${\bf x}_1,\cdots,{\bf x}_N$，我们想知道模型输出$y_n=y\left({\bf x}_n\right),n=1,\cdots,N$的联合分布。从模型可以知道
 
 $$
-{\bf{y}} = {\bf{\Phi w}}
+{\mathbf{y}} = {\mathbf{\Phi w}}
 $$
 
 其中$\bf \Phi$的元素$\Phi_{nk}=\phi_k\left({\bf x}_n\right)$。由于权重是高斯的，显然输出的联合分布也是高斯的，其均值和协方差为
 
 $$
-\mathbb E\left[ {\bf{y}} \right] = {\bf{\Phi }}\mathbb E\left[ {\bf{w}} \right] = {\bf{0}}
+\mathbb E\left[ {\mathbf{y}} \right] = {\mathbf{\Phi }}\mathbb E\left[ {\mathbf{w}} \right] = {\mathbf{0}}
 $$
 
 $$
-{{\rm cov}} \left[ {\bf{y}} \right] = E\left[ {{\bf{y}}{{\bf{y}}^T}} \right] = {\bf{\Phi }}E\left[ {{\bf{w}}{{\bf{w}}^T}} \right]{{\bf{\Phi }}^T} = {\alpha ^{ - 1}}{\bf{\Phi }}{{\bf{\Phi }}^T=\bf K}
+{{\rm cov}} \left[ {\mathbf{y}} \right] = E\left[ {{\mathbf{y}}{{\mathbf{y}}^T}} \right] = {\mathbf{\Phi }}E\left[ {{\mathbf{w}}{{\mathbf{w}}^T}} \right]{{\mathbf{\Phi }}^T} = {\alpha ^{ - 1}}{\mathbf{\Phi }}{{\mathbf{\Phi }}^T=\mathbf K}
 $$
 
 $\bf K$是Gram矩阵，其元素$K_{nm}=k\left({\bf x}_n,{\bf x}_m\right)=\alpha^{-1}{\bm \phi\left({\bf x}_n\right)}^T \bm\phi\left({\bf x}_m\right)$，$k$是核函数。从$\rm cov\left[\bf y\right]$的计算式可以看出核函数满足
 
 $$
-k\left( {{{\bf{x}}_n},{{\bf{x}}_m}} \right) = E\left[ {y\left( {{{\bf{x}}_n}} \right)y\left( {{{\bf{x}}_m}} \right)} \right]
+k\left( {{{\mathbf{x}}_n},{{\mathbf{x}}_m}} \right) = E\left[ {y\left( {{{\mathbf{x}}_n}} \right)y\left( {{{\mathbf{x}}_m}} \right)} \right]
 $$
 
 因此我们可以直接定义核函数来得到输出协方差阵的形式，而不用选择具体的基函数。
@@ -69,25 +71,25 @@ $$
 假设噪声$\epsilon_n$是高斯的并且独立同分布的，给定$y_n=y\left({\bf x}_n\right),n=1,\cdots,N$，$t_n$的联合概率为
 
 $$
-p\left( {{\bf{t}}\left| {\bf{y}} \right.} \right) = \mathcal N\left( {{\bf{t}}\left| {{\bf{y}},{\beta ^{ - 1}}{{\bf{I}}_n}} \right.} \right)
+p\left( {{\mathbf{t}}\left| {\mathbf{y}} \right.} \right) = \mathcal N\left( {{\mathbf{t}}\left| {{\mathbf{y}},{\beta ^{ - 1}}{{\mathbf{I}}_n}} \right.} \right)
 $$
 
 而$y_n$的联合概率为
 
 $$
-p\left( {\bf{y}} \right) = \mathcal N\left( {{\bf{y}}\left| {{\bf{0}},{\bf{K}}} \right.} \right)
+p\left( {\mathbf{y}} \right) = \mathcal N\left( {{\mathbf{y}}\left| {{\mathbf{0}},{\mathbf{K}}} \right.} \right)
 $$
 
 这里核函数矩阵的定义和上一节相同。那么$t_n$的联合边缘概率分布为
 
 $$
-p\left( {\bf{t}} \right) = \int {p\left( {{\bf{t}}\left| {\bf{y}} \right.} \right)p\left( {\bf{y}} \right)d{\bf{y}} = \mathcal N\left( {{\bf{t}}\left| {{\bf{0}},{\bf{C}}} \right.} \right)}
+p\left( {\mathbf{t}} \right) = \int {p\left( {{\mathbf{t}}\left| {\mathbf{y}} \right.} \right)p\left( {\mathbf{y}} \right)d{\mathbf{y}} = \mathcal N\left( {{\mathbf{t}}\left| {{\mathbf{0}},{\mathbf{C}}} \right.} \right)}
 $$
 
 其中
 
 $$
-{\bf{C}} = {\bf{K}} + {\beta ^{ - 1}}{{\bf{I}}_n}
+{\mathbf{C}} = {\mathbf{K}} + {\beta ^{ - 1}}{{\mathbf{I}}_n}
 $$
 
 实际上${\bf{t}} = {\bf{y}} + {\bm{\epsilon }}$，$\bf{y}$与${\bm{\epsilon }}$是独立的，因此${\bf{t}}$的协方差为两者的协方差直接相加。
@@ -95,7 +97,7 @@ $$
 之后我们利用新的观测数据${\bf x}^*=\left({\bf x}_{n+1},\cdots,{\bf x}_{n+m+1}\right)^T$预测${\bf t}^*=\left({\bf t}_{n+1},\cdots,{\bf t}_{n+m+1}\right)^T$，假设新的目标加入后的联合分布依然服从高斯分布：
 
 $$
-\left[ {\begin{array}{ccccccccccccccc}{\bf{y}}\\{{{\bf{y}}^*}}\end{array}} \right] \sim \mathcal N\left( {{\bf{0}},\left[ {\begin{array}{ccccccccccccccc}{{\bf{C}}\left( {{\bf{x}},{\bf{x}}} \right)}&{{\bf{K}}\left( {{\bf{x}},{{\bf{x}}^*}} \right)}\\{{\bf{K}}\left( {{{\bf{x}}^*},{\bf{x}}} \right)}&{{\bf{C}}\left( {{{\bf{x}}^*},{{\bf{x}}^*}} \right)}\end{array}} \right]} \right)
+\left[ {\begin{array}{ccccccccccccccc}{\mathbf{y}}\\{{{\mathbf{y}}^*}}\end{array}} \right] \sim \mathcal N\left( {{\mathbf{0}},\left[ {\begin{array}{ccccccccccccccc}{{\mathbf{C}}\left( {{\mathbf{x}},{\mathbf{x}}} \right)}&{{\mathbf{K}}\left( {{\mathbf{x}},{{\mathbf{x}}^*}} \right)}\\{{\mathbf{K}}\left( {{{\mathbf{x}}^*},{\mathbf{x}}} \right)}&{{\mathbf{C}}\left( {{{\mathbf{x}}^*},{{\mathbf{x}}^*}} \right)}\end{array}} \right]} \right)
 $$
 
 > 多维高斯分布的条件概率如下：
@@ -103,23 +105,23 @@ $$
 > 若
 >
 > $$
-> \left[ {\begin{array}{ccccccccccccccc}{\bf{x}}\\{\bf{y}}\end{array}} \right] \sim {\mathcal N}\left( {\left[ {\begin{array}{ccccccccccccccc}{{{\bm{\mu }}_x}}\\{{{\bm{\mu }}_y}}\end{array}} \right],\left[ {\begin{array}{ccccccccccccccc}{\bf{A}}&{\bf{C}}\\{{{\bf{C}}^T}}&{\bf{B}}\end{array}} \right]} \right)
+> \left[ {\begin{array}{ccccccccccccccc}{\mathbf{x}}\\{\mathbf{y}}\end{array}} \right] \sim {\mathcal N}\left( {\left[ {\begin{array}{ccccccccccccccc}{{{\bm{\mu }}_x}}\\{{{\bm{\mu }}_y}}\end{array}} \right],\left[ {\begin{array}{ccccccccccccccc}{\mathbf{A}}&{\mathbf{C}}\\{{{\mathbf{C}}^T}}&{\mathbf{B}}\end{array}} \right]} \right)
 > $$
 >
 > 则
 >
 > $$
-> {\bf{x}}\left| {\bf{y}} \sim {\mathcal N}\left( {{{\bm{\mu }}_x} + {\bf{C}}{{\bf{B}}^{ - 1}}\left( {{\bf{y}} - {{\bm{\mu }}_y}} \right),{\bf{A}} - {\bf{C}}{{\bf{B}}^{ - 1}}{{\bf{C}}^T}} \right) \right.
+> {\mathbf{x}}\left| {\mathbf{y}} \sim {\mathcal N}\left( {{{\bm{\mu }}_x} + {\mathbf{C}}{{\mathbf{B}}^{ - 1}}\left( {{\mathbf{y}} - {{\bm{\mu }}_y}} \right),{\mathbf{A}} - {\mathbf{C}}{{\mathbf{B}}^{ - 1}}{{\mathbf{C}}^T}} \right) \right.
 > $$
 
 根据多维高斯的条件分布公式，可得
 
 $$
-\mathbb E\left[ {{{\bf{y}}^*}\left| {\bf{y}} \right.} \right] = {\bf{K}}\left( {{{\bf{x}}^*},{\bf{x}}} \right){\bf{C}}{\left( {{\bf{x}},{\bf{x}}} \right)^{ - 1}}{\bf{y}}
+\mathbb E\left[ {{{\mathbf{y}}^*}\left| {\mathbf{y}} \right.} \right] = {\mathbf{K}}\left( {{{\mathbf{x}}^*},{\mathbf{x}}} \right){\mathbf{C}}{\left( {{\mathbf{x}},{\mathbf{x}}} \right)^{ - 1}}{\mathbf{y}}
 $$
 
 $$
-{\bf{C}}\left[ {{{\bf{y}}^*}\left| {\bf{y}} \right.} \right] = {\bf{C}}\left( {{{\bf{x}}^*},{{\bf{x}}^*}} \right) - {\bf{K}}\left( {{{\bf{x}}^*},{\bf{x}}} \right){\bf{C}}{\left( {{\bf{x}},{\bf{x}}} \right)^{ - 1}}{\bf{K}}\left( {{\bf{x}},{{\bf{x}}^*}} \right)
+{\mathbf{C}}\left[ {{{\mathbf{y}}^*}\left| {\mathbf{y}} \right.} \right] = {\mathbf{C}}\left( {{{\mathbf{x}}^*},{{\mathbf{x}}^*}} \right) - {\mathbf{K}}\left( {{{\mathbf{x}}^*},{\mathbf{x}}} \right){\mathbf{C}}{\left( {{\mathbf{x}},{\mathbf{x}}} \right)^{ - 1}}{\mathbf{K}}\left( {{\mathbf{x}},{{\mathbf{x}}^*}} \right)
 $$
 
 这就得到了预测值的均值和协方差。
@@ -129,7 +131,7 @@ $$
 > 但是我们必须记住，只有当$k \left(\bf x,x\right)$为某常数时，上面的理解才合理。在一些核函数中，$k \left(\bf x,x\right)$确实为常数，比如径向基核函数（Radial Basis Function，RBF），其形式为：
 >
 > $$
-> k\left( {{\bf{x}},{\bf{x}}'} \right) = \exp \left( { - \frac{{\left\| {{\bf{x}} - {\bf{x}}'} \right\|_2^2}}{{2{\sigma ^2}}}} \right)
+> k\left( {{\mathbf{x}},{\mathbf{x}}'} \right) = \exp \left( { - \frac{{\left\| {{\mathbf{x}} - {\mathbf{x}}'} \right\|_2^2}}{{2{\sigma ^2}}}} \right)
 > $$
 >
 > 可见，当核为RBF核时，$k \left(\bf x,x\right)$为常数。但也存在着$k \left(\bf x,x\right)$不为常数的核，这种核在特征空间中不是一种严格的相似性度量，就不能这么直观理解了。
@@ -203,7 +205,7 @@ $$
 其中
 
 $$
-{\beta _i}\left( {{\bm x}^*} \right) = \sum\limits_{j = 1}^n {{\bf{C}}\left( {\bm x,\bm x} \right)_{ij}^{ - 1}k\left( {{\bm x}^*,{{\bm x}_j}} \right)}
+{\beta _i}\left( {{\bm x}^*} \right) = \sum\limits_{j = 1}^n {{\mathbf{C}}\left( {\bm x,\bm x} \right)_{ij}^{ - 1}k\left( {{\bm x}^*,{{\bm x}_j}} \right)}
 $$
 
 其中$c\left( {{x^*},{x^*}} \right) = k\left( {{x^*},{x^*}} \right) + \sigma _\varepsilon ^2$，在核方法为RBF时，该项为常数。如果输入${{{\bm{x}}^*}}$与训练数据的距离很远，第二项中$k\left(\bm x^*,\bm x_i\right)$也相应的变小，使得预测方差增大。这种性质保证了GP回归中的不确定度可以很好地检测分布外数据（Out-Of-Distribution）OOD。![img](image/从非线性概率模型出发理解BNN/1647421308137.png)
